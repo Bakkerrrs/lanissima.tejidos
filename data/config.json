@@ -3,5 +3,11 @@
   "youtube": "",
   "tiktok": "",
   "pinterest": "",
-  "newsletterAction": ""
+  "newsletterAction": "",
+  "instagramPosts": [
+    { "image": "uploads/placeholder-1.svg", "url": "https://www.instagram.com/" },
+    { "image": "uploads/placeholder-2.svg", "url": "https://www.instagram.com/" },
+    { "image": "uploads/placeholder-3.svg", "url": "https://www.instagram.com/" },
+    { "image": "uploads/placeholder-hero.svg", "url": "https://www.instagram.com/" }
+  ]
 }

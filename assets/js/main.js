@@ -39,11 +39,11 @@ function renderHeader(activePage) {
     </div>
     <nav class="site-nav">
       <ul>
-        <li><a href="index.html" data-i18n="nav.home" data-page="index"></a></li>
-        <li><a href="patrones.html" data-i18n="nav.patterns" data-page="patrones"></a></li>
-        <li><a href="videos.html" data-i18n="nav.videos" data-page="videos"></a></li>
-        <li><a href="calculadora.html" data-i18n="nav.calculator" data-page="calculadora"></a></li>
-        <li><a href="sobre-mi.html" data-i18n="nav.about" data-page="sobre-mi"></a></li>
+        <li><a href="index.html" data-i18n="nav.home" data-page="index" data-section="inicio"></a></li>
+        <li><a href="index.html#patrones" data-i18n="nav.patterns" data-page="patrones" data-section="patrones"></a></li>
+        <li><a href="index.html#videos" data-i18n="nav.videos" data-page="videos" data-section="videos"></a></li>
+        <li><a href="index.html#calculadora" data-i18n="nav.calculator" data-page="calculadora" data-section="calculadora"></a></li>
+        <li><a href="index.html#sobre-mi" data-i18n="nav.about" data-page="sobre-mi" data-section="sobre-mi"></a></li>
       </ul>
     </nav>`;
   document.body.prepend(header);
@@ -60,6 +60,54 @@ function renderHeader(activePage) {
   toggle.addEventListener('click', () => {
     const open = nav.classList.toggle('open');
     toggle.setAttribute('aria-expanded', String(open));
+  });
+
+  // En móvil, cierra el menú al elegir una sección.
+  nav.addEventListener('click', (ev) => {
+    if (ev.target.closest('a')) {
+      nav.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  // En la portada, resalta el ítem del menú según la sección visible.
+  if (activePage === 'index') {
+    const links = header.querySelectorAll('.site-nav a[data-section]');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        links.forEach((a) => a.classList.toggle('active', a.dataset.section === entry.target.id));
+      });
+    }, { rootMargin: '-40% 0px -55% 0px' });
+    // Se observan las secciones cuando ya existen en el DOM.
+    setTimeout(() => {
+      ['inicio', 'patrones', 'videos', 'calculadora', 'sobre-mi'].forEach((id) => {
+        const el = document.getElementById(id);
+        if (el) observer.observe(el);
+      });
+    }, 0);
+  }
+}
+
+/* --------------------------------------------------- aparición al scrollear */
+
+const revealObserver = ('IntersectionObserver' in window)
+  ? new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 })
+  : null;
+
+function observeReveals(root = document) {
+  if (!revealObserver) return;
+  root.querySelectorAll('.section-head, .pattern-card, .video-card, .ig-item').forEach((el) => {
+    if (el.classList.contains('reveal')) return;
+    el.classList.add('reveal');
+    revealObserver.observe(el);
   });
 }
 
@@ -141,11 +189,119 @@ function sortByDate(items) {
   return [...items].sort((a, b) => (b.date || '').localeCompare(a.date || ''));
 }
 
+/* ------------------------------------------------- carrusel de la portada */
+
+function renderHeroCarousel(patterns) {
+  const box = document.querySelector('.hero-carousel');
+  const latest = sortByDate(patterns.items).slice(0, 5);
+  if (!latest.length) { box.style.display = 'none'; return; }
+
+  const track = box.querySelector('.hc-track');
+  const dots = box.querySelector('.hc-dots');
+
+  const draw = () => {
+    track.innerHTML = latest.map((p) => `
+      <a class="hc-slide" href="patron.html?id=${encodeURIComponent(p.id)}">
+        <img src="${p.image || 'uploads/placeholder-hero.svg'}" alt="${lf(p, 'title')}"
+             onerror="this.onerror=null;this.src='uploads/placeholder-hero.svg'">
+        <div class="hc-overlay">
+          <span class="hc-eyebrow">${t('hero.new')}</span>
+          <h2>${lf(p, 'title')}</h2>
+          <span class="btn btn-light">${t('hero.view')}</span>
+        </div>
+      </a>`).join('');
+    dots.innerHTML = latest
+      .map((p, i) => `<button type="button" data-slide="${i}" aria-label="${lf(p, 'title')}"></button>`)
+      .join('');
+  };
+  draw();
+  document.addEventListener('langchange', draw);
+
+  let index = 0;
+  let paused = false;
+
+  const goTo = (i, smooth = true) => {
+    index = (i + latest.length) % latest.length;
+    track.scrollTo({ left: index * track.clientWidth, behavior: smooth ? 'smooth' : 'auto' });
+  };
+
+  const markDot = () => {
+    dots.querySelectorAll('button').forEach((d, i) => d.classList.toggle('active', i === index));
+  };
+  markDot();
+
+  // El swipe manual también actualiza los puntos.
+  track.addEventListener('scroll', () => {
+    clearTimeout(track._t);
+    track._t = setTimeout(() => {
+      index = Math.round(track.scrollLeft / track.clientWidth);
+      markDot();
+    }, 80);
+  }, { passive: true });
+
+  dots.addEventListener('click', (ev) => {
+    const b = ev.target.closest('[data-slide]');
+    if (b) { goTo(Number(b.dataset.slide)); markDot(); }
+  });
+
+  ['mouseenter', 'touchstart', 'focusin'].forEach((e) =>
+    box.addEventListener(e, () => { paused = true; }, { passive: true }));
+  ['mouseleave', 'touchend', 'focusout'].forEach((e) =>
+    box.addEventListener(e, () => { paused = false; }, { passive: true }));
+
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!reduced && latest.length > 1) {
+    setInterval(() => {
+      if (!paused && document.visibilityState === 'visible') {
+        goTo(index + 1);
+        markDot();
+      }
+    }, 4500);
+  }
+}
+
+/* ------------------------------------------------------ instagram (grid) */
+
+const IG_ICON = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+  <rect x="3" y="3" width="18" height="18" rx="5"/>
+  <circle cx="12" cy="12" r="4.2"/>
+  <circle cx="17.4" cy="6.6" r="1.2" fill="currentColor" stroke="none"/>
+</svg>`;
+
+async function renderInstagram() {
+  const cfg = await getConfig();
+  const section = document.getElementById('instagram');
+  const posts = cfg.instagramPosts || [];
+  if (!posts.length) { section.style.display = 'none'; return; }
+
+  document.getElementById('ig-grid').innerHTML = posts.slice(0, 6).map((p) => `
+    <a class="ig-item" href="${p.url || cfg.instagram || '#'}" target="_blank" rel="noopener">
+      <img src="${p.image}" alt="Instagram" loading="lazy"
+           onerror="this.onerror=null;this.src='uploads/placeholder-1.svg'">
+      ${IG_ICON}
+    </a>`).join('');
+
+  const handleEl = document.getElementById('ig-handle');
+  const followBtn = document.getElementById('ig-follow');
+  if (cfg.instagram) {
+    const handle = cfg.instagram.replace(/\/+$/, '').split('/').pop();
+    // Muestra el @usuario en lugar del subtítulo genérico traducido.
+    handleEl.removeAttribute('data-i18n');
+    handleEl.textContent = '@' + handle.replace(/^@/, '');
+    followBtn.href = cfg.instagram;
+  } else {
+    followBtn.style.display = 'none';
+  }
+}
+
 async function renderHome() {
   const [patterns, videos] = await Promise.all([
     loadJSON('data/patterns.json'),
     loadJSON('data/videos.json'),
   ]);
+
+  renderHeroCarousel(patterns);
+  await renderInstagram();
 
   const draw = () => {
     const featured = patterns.items.filter((p) => p.featured);
@@ -155,9 +311,10 @@ async function renderHome() {
       `<p class="empty-note">${t('patterns.empty')}</p>`;
 
     document.getElementById('home-videos').innerHTML =
-      sortByDate(videos.items).slice(0, 2).map(videoCard).join('') ||
+      sortByDate(videos.items).slice(0, 4).map((v) => videoCard(v, true)).join('') ||
       `<p class="empty-note">${t('videos.empty')}</p>`;
     wireVideoCards(document.getElementById('home-videos'));
+    observeReveals();
   };
   draw();
   document.addEventListener('langchange', draw);
@@ -245,13 +402,16 @@ async function renderPatternDetail() {
 
 /* ----------------------------------------------------------------- videos */
 
-function videoCard(v) {
-  const thumb = `https://i.ytimg.com/vi/${v.youtubeId}/hqdefault.jpg`;
+function videoCard(v, large) {
+  // En tarjetas grandes intenta la miniatura HD y baja de calidad si no existe.
+  const thumb = `https://i.ytimg.com/vi/${v.youtubeId}/${large ? 'maxresdefault' : 'hqdefault'}.jpg`;
+  const fallback = large
+    ? `if(!this.dataset.f){this.dataset.f=1;this.src='https://i.ytimg.com/vi/${v.youtubeId}/hqdefault.jpg'}else{this.onerror=null;this.src='uploads/placeholder-1.svg'}`
+    : `this.onerror=null;this.src='uploads/placeholder-1.svg'`;
   return `
     <div class="video-card" data-yt="${v.youtubeId}">
       <div class="frame" role="button" tabindex="0" aria-label="${lf(v, 'title')}">
-        <img src="${thumb}" alt="${lf(v, 'title')}" loading="lazy"
-             onerror="this.onerror=null;this.src='uploads/placeholder-1.svg'">
+        <img src="${thumb}" alt="${lf(v, 'title')}" loading="lazy" onerror="${fallback}">
         <span class="play-btn" aria-hidden="true"></span>
       </div>
       <div class="name">${lf(v, 'title')}</div>
@@ -301,4 +461,5 @@ async function initPage(page) {
     console.error(err);
   }
   applyI18n();
+  observeReveals();
 }

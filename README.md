@@ -8,7 +8,7 @@ objetivo es crear engagement.
 
 | Página | Qué hace |
 | --- | --- |
-| `index.html` | Portada: hero, patrones destacados, últimos videos, newsletter |
+| `index.html` | Portada one-page: carrusel automático de últimos patrones, patrones destacados, videos grandes, calculadora, sobre mí, Instagram y newsletter. El menú hace scroll suave a cada sección |
 | `patrones.html` | Todos los patrones, con filtros por categoría y dificultad |
 | `patron.html?id=…` | Detalle de un patrón con botón de descarga del PDF |
 | `videos.html` | Videos de YouTube incrustados (clic para reproducir) |
@@ -44,7 +44,10 @@ Desde el panel puedes:
 - **Patrones**: crear, editar y eliminar; subir la foto y el PDF (ES y opcionalmente EN),
   elegir categoría, dificultad y si va destacado en la portada.
 - **Videos**: pegar la URL de YouTube y listo (la miniatura es automática).
-- **Configuración**: enlaces de redes sociales y URL del newsletter.
+- **Instagram**: subir la foto y el enlace de cada post que quieras mostrar en la
+  portada (hasta 6). La sección se oculta sola si no hay posts.
+- **Configuración**: enlaces de redes sociales y URL del newsletter. El enlace de
+  Instagram también alimenta el @usuario y el botón "Ver mi Instagram" de la portada.
 
 Cada cambio crea un commit en la rama `main` y GitHub Pages republica el sitio
 automáticamente en 1-2 minutos.
@@ -72,6 +75,5 @@ diseño. Elimínalos desde el panel cuando subas tu contenido real.
   el navegador; genera visitas recurrentes.
 - **Favoritos**: guardar patrones favoritos con `localStorage`.
 - **Knit-alongs (KAL)**: tejer un patrón en comunidad con fechas y hashtag.
-- **Feed de Instagram** en la portada.
 - **Galería de la comunidad**: fotos de personas que tejieron tus patrones.
 - **Modo oscuro**.

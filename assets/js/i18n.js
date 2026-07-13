@@ -13,6 +13,13 @@ const I18N = {
     'hero.subtitle': 'Descarga gratis mis patrones, aprende con mis videos y teje conmigo. Todo pensado para que disfrutes cada puntada.',
     'hero.cta': 'Ver patrones',
 
+    'hero.new': 'Patrón nuevo · Gratis',
+    'hero.view': 'Ver patrón',
+
+    'ig.title': 'Sígueme en Instagram',
+    'ig.subtitle': 'Proyectos, avances y lana del día a día',
+    'ig.follow': 'Ver mi Instagram',
+
     'home.featured': 'Patrones destacados',
     'home.featuredSub': 'Todos mis patrones son gratuitos',
     'home.videos': 'Últimos videos',
@@ -87,6 +94,13 @@ const I18N = {
     'hero.title': 'Knitting patterns and tutorials, made with love',
     'hero.subtitle': 'Download my free patterns, learn with my videos and knit along with me. Everything made for you to enjoy every stitch.',
     'hero.cta': 'Browse patterns',
+
+    'hero.new': 'New pattern · Free',
+    'hero.view': 'View pattern',
+
+    'ig.title': 'Follow me on Instagram',
+    'ig.subtitle': 'Projects, progress and everyday yarn',
+    'ig.follow': 'Visit my Instagram',
 
     'home.featured': 'Featured patterns',
     'home.featuredSub': 'All my patterns are free',

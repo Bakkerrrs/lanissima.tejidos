@@ -13,21 +13,20 @@
 </head>
 <body>
 
-  <section class="hero">
-    <div class="hero-inner">
-      <div>
-        <span class="eyebrow">Lanissima Tejidos</span>
-        <h1 data-i18n="hero.title"></h1>
-        <p data-i18n="hero.subtitle"></p>
-        <a class="btn btn-solid" href="patrones.html" data-i18n="hero.cta"></a>
-      </div>
-      <div class="hero-art">
-        <img src="assets/img/logo.svg" alt="Lanissima — ovillo de lana">
-      </div>
-    </div>
+  <!-- Carrusel de últimos patrones -->
+  <section class="hero-carousel" id="inicio" aria-label="Últimos patrones">
+    <div class="hc-track"></div>
+    <div class="hc-dots"></div>
   </section>
 
-  <section class="section">
+  <div class="hero-intro">
+    <span class="eyebrow">Lanissima Tejidos</span>
+    <h1 data-i18n="hero.title"></h1>
+    <p data-i18n="hero.subtitle"></p>
+  </div>
+
+  <!-- Patrones destacados -->
+  <section class="section" id="patrones">
     <div class="container">
       <div class="section-head">
         <h2 data-i18n="home.featured"></h2>
@@ -40,21 +39,97 @@
     </div>
   </section>
 
-  <section class="section section-soft">
+  <!-- Últimos videos -->
+  <section class="section section-soft" id="videos">
     <div class="container">
       <div class="section-head">
         <h2 data-i18n="home.videos"></h2>
         <p data-i18n="home.videosSub"></p>
       </div>
-      <div class="video-grid" id="home-videos"></div>
+      <div class="video-grid video-grid-lg" id="home-videos"></div>
       <div class="section-foot">
         <a class="btn" href="videos.html" data-i18n="home.seeAllVideos"></a>
       </div>
     </div>
   </section>
 
+  <!-- Calculadora de lana -->
+  <section class="section" id="calculadora">
+    <div class="container">
+      <div class="section-head">
+        <h2 data-i18n="calc.title"></h2>
+        <p data-i18n="calc.subtitle"></p>
+      </div>
+      <div class="calc-wrap">
+        <form id="calc-form">
+          <div class="calc-grid">
+            <div class="field">
+              <label data-i18n="calc.garment"></label>
+              <select name="garment"></select>
+            </div>
+            <div class="field">
+              <label data-i18n="calc.size"></label>
+              <select name="size"></select>
+            </div>
+            <div class="field">
+              <label data-i18n="calc.weight"></label>
+              <select name="weight"></select>
+            </div>
+            <div class="field">
+              <label data-i18n="calc.skein"></label>
+              <input type="number" name="skein" value="100" min="1" max="2000">
+            </div>
+          </div>
+          <div style="text-align:center">
+            <button type="submit" class="btn btn-solid" data-i18n="calc.button"></button>
+          </div>
+        </form>
+
+        <div class="calc-result" id="calc-result">
+          <p data-i18n="calc.resultTitle"></p>
+          <p><span class="big" id="calc-meters">0</span> <span class="unit" data-i18n="calc.meters"></span></p>
+          <p class="detail" id="calc-skeins"></p>
+        </div>
+
+        <p class="calc-note" data-i18n="calc.note"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sobre mí -->
+  <section class="section section-soft" id="sobre-mi">
+    <div class="container">
+      <div class="about-wrap" style="padding:0">
+        <div class="portrait">
+          <img src="assets/img/logo.svg" alt="Lanissima Tejidos">
+        </div>
+        <div>
+          <h1 data-i18n="about.title"></h1>
+          <p data-i18n="about.p1"></p>
+          <p data-i18n="about.p2"></p>
+          <p data-i18n="about.p3"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Instagram -->
+  <section class="section" id="instagram">
+    <div class="container">
+      <div class="section-head">
+        <h2 data-i18n="ig.title"></h2>
+        <p class="ig-handle" id="ig-handle" data-i18n="ig.subtitle"></p>
+      </div>
+      <div class="ig-grid" id="ig-grid"></div>
+      <div class="section-foot">
+        <a class="btn" id="ig-follow" href="#" target="_blank" rel="noopener" data-i18n="ig.follow"></a>
+      </div>
+    </div>
+  </section>
+
   <script src="assets/js/i18n.js"></script>
   <script src="assets/js/main.js"></script>
-  <script>initPage('index');</script>
+  <script src="assets/js/calculadora.js"></script>
+  <script>initPage('index').then(() => { initCalculadora(); applyI18n(); });</script>
 </body>
 </html>

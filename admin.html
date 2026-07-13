@@ -56,6 +56,7 @@
       <div class="admin-tabs">
         <button class="chip active" data-tab="patterns">Patrones</button>
         <button class="chip" data-tab="videos">Videos</button>
+        <button class="chip" data-tab="instagram">Instagram</button>
         <button class="chip" data-tab="config">Configuración</button>
       </div>
 
@@ -144,6 +145,31 @@
             </div>
             <div class="field full">
               <button type="submit" class="btn btn-solid">Guardar video</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- INSTAGRAM -->
+      <div class="admin-panel" id="panel-instagram" style="display:none">
+        <div class="admin-card">
+          <h2>Posts de Instagram en la portada</h2>
+          <p style="margin-bottom:14px;color:#7a7a7a">Sube la foto de cada post que quieras mostrar y pega su enlace. Se muestran hasta 6, en este orden.</p>
+          <ul class="admin-list" id="ig-list"></ul>
+        </div>
+        <div class="admin-card">
+          <h2>Agregar post</h2>
+          <form id="ig-form" class="admin-form">
+            <div class="field">
+              <label>Foto del post (JPG/PNG) *</label>
+              <input type="file" name="image" accept="image/*" required>
+            </div>
+            <div class="field">
+              <label>Enlace al post en Instagram *</label>
+              <input type="url" name="url" placeholder="https://www.instagram.com/p/…" required>
+            </div>
+            <div class="field full">
+              <button type="submit" class="btn btn-solid">Agregar a la portada</button>
             </div>
           </form>
         </div>

@@ -159,6 +159,7 @@ async function bootAdmin() {
   showStatus('Conectado ✓');
   renderAdminPatterns();
   renderAdminVideos();
+  renderAdminInstagram();
   renderAdminConfig();
 }
 
@@ -328,6 +329,60 @@ async function deleteVideo(index) {
   }
 }
 
+/* -------------------------------------------------------------- instagram */
+
+function renderAdminInstagram() {
+  const posts = ADMIN.state.config.instagramPosts || [];
+  const list = document.getElementById('ig-list');
+  list.innerHTML = posts.map((p, i) => `
+    <li>
+      <img src="${p.image}" alt=""
+           onerror="this.onerror=null;this.src='uploads/placeholder-1.svg'">
+      <div class="grow">
+        <div class="title">Post ${i + 1}</div>
+        <div class="sub">${p.url}</div>
+      </div>
+      <button class="btn-small danger" data-del-ig="${i}">Eliminar</button>
+    </li>`).join('') || '<li><div class="grow sub">Aún no hay posts. La sección no se muestra en la portada hasta que agregues al menos uno.</div></li>';
+}
+
+async function submitIgForm(ev) {
+  ev.preventDefault();
+  const f = ev.target;
+  const c = ADMIN.state.config;
+  if (!c.instagramPosts) c.instagramPosts = [];
+  try {
+    showStatus('Subiendo foto…');
+    const ext = (f.image.files[0].name.split('.').pop() || 'jpg').toLowerCase();
+    const image = await uploadBinary(
+      `uploads/ig-${Date.now().toString(36)}.${ext}`,
+      f.image.files[0],
+      'Foto de post de Instagram'
+    );
+    c.instagramPosts.unshift({ image, url: f.url.value.trim() });
+    await saveDataFile('config', c, 'Agrega post de Instagram a la portada');
+    f.reset();
+    renderAdminInstagram();
+    showStatus('Post agregado ✓ (el sitio se actualizará en 1-2 minutos)');
+  } catch (err) {
+    showStatus('Error al guardar: ' + err.message, true);
+  }
+}
+
+async function deleteIgPost(index) {
+  const c = ADMIN.state.config;
+  if (!confirm('¿Quitar este post de la portada?')) return;
+  c.instagramPosts.splice(index, 1);
+  try {
+    showStatus('Eliminando…');
+    await saveDataFile('config', c, 'Quita post de Instagram de la portada');
+    renderAdminInstagram();
+    showStatus('Post eliminado ✓');
+  } catch (err) {
+    showStatus('Error: ' + err.message, true);
+  }
+}
+
 /* ---------------------------------------------------------------- config */
 
 function renderAdminConfig() {
@@ -365,6 +420,7 @@ function initAdmin() {
   document.getElementById('logout-btn').addEventListener('click', adminLogout);
   document.getElementById('pattern-form').addEventListener('submit', submitPatternForm);
   document.getElementById('video-form').addEventListener('submit', submitVideoForm);
+  document.getElementById('ig-form').addEventListener('submit', submitIgForm);
   document.getElementById('config-form').addEventListener('submit', submitConfigForm);
 
   document.getElementById('pattern-cancel').addEventListener('click', () => {
@@ -386,6 +442,11 @@ function initAdmin() {
   document.getElementById('videos-list').addEventListener('click', (ev) => {
     const del = ev.target.closest('[data-del-video]');
     if (del) deleteVideo(Number(del.dataset.delVideo));
+  });
+
+  document.getElementById('ig-list').addEventListener('click', (ev) => {
+    const del = ev.target.closest('[data-del-ig]');
+    if (del) deleteIgPost(Number(del.dataset.delIg));
   });
 
   // Tabs
