@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lanissima Tejidos — Patrones y videos de tejido gratis</title>
+  <meta name="description" content="Patrones de tejido gratuitos, videotutoriales y calculadora de lana. Lanissima Tejidos: teje conmigo.">
+  <link rel="icon" type="image/svg+xml" href="assets/img/logo-icon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+  <section class="hero">
+    <div class="hero-inner">
+      <div>
+        <span class="eyebrow">Lanissima Tejidos</span>
+        <h1 data-i18n="hero.title"></h1>
+        <p data-i18n="hero.subtitle"></p>
+        <a class="btn btn-solid" href="patrones.html" data-i18n="hero.cta"></a>
+      </div>
+      <div class="hero-art">
+        <img src="assets/img/logo.svg" alt="Lanissima — ovillo de lana">
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <h2 data-i18n="home.featured"></h2>
+        <p data-i18n="home.featuredSub"></p>
+      </div>
+      <div class="pattern-grid" id="featured-grid"></div>
+      <div class="section-foot">
+        <a class="btn" href="patrones.html" data-i18n="home.seeAll"></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-soft">
+    <div class="container">
+      <div class="section-head">
+        <h2 data-i18n="home.videos"></h2>
+        <p data-i18n="home.videosSub"></p>
+      </div>
+      <div class="video-grid" id="home-videos"></div>
+      <div class="section-foot">
+        <a class="btn" href="videos.html" data-i18n="home.seeAllVideos"></a>
+      </div>
+    </div>
+  </section>
+
+  <script src="assets/js/i18n.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script>initPage('index');</script>
+</body>
+</html>

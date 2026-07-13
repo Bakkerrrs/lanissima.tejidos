@@ -1,0 +1,55 @@
+{
+  "categories": [
+    { "id": "gorros", "name_es": "Gorros", "name_en": "Hats" },
+    { "id": "chalecos", "name_es": "Chalecos", "name_en": "Vests" },
+    { "id": "sweaters", "name_es": "Sweaters", "name_en": "Sweaters" },
+    { "id": "bufandas", "name_es": "Bufandas y cuellos", "name_en": "Scarves & cowls" },
+    { "id": "mantas", "name_es": "Mantas", "name_en": "Blankets" },
+    { "id": "amigurumi", "name_es": "Amigurumi", "name_en": "Amigurumi" },
+    { "id": "otros", "name_es": "Otros", "name_en": "Other" }
+  ],
+  "items": [
+    {
+      "id": "gorro-brisa-ejemplo",
+      "title_es": "Gorro Brisa (ejemplo)",
+      "title_en": "Brisa Hat (sample)",
+      "desc_es": "Este es un patrón de ejemplo para mostrar cómo se verá tu contenido. Un gorro tejido en punto elástico, perfecto para principiantes.\n\nMateriales: 1 ovillo de lana gruesa (100 g), agujas 6 mm.\n\nReemplaza este patrón desde el panel de administración.",
+      "desc_en": "This is a sample pattern to show how your content will look. A ribbed knit hat, perfect for beginners.\n\nMaterials: 1 skein of chunky yarn (100 g), 6 mm needles.\n\nReplace this pattern from the admin panel.",
+      "category": "gorros",
+      "difficulty": "principiante",
+      "image": "uploads/placeholder-1.svg",
+      "pdf": "patterns/patron-ejemplo.pdf",
+      "pdf_en": "",
+      "date": "2026-07-01",
+      "featured": true
+    },
+    {
+      "id": "chaleco-otono-ejemplo",
+      "title_es": "Chaleco Otoño (ejemplo)",
+      "title_en": "Autumn Vest (sample)",
+      "desc_es": "Patrón de ejemplo. Un chaleco holgado con textura de arroz, ideal para las tardes frescas.\n\nMateriales: 4 ovillos de lana media (100 g c/u), agujas 5 mm.",
+      "desc_en": "Sample pattern. A relaxed vest with seed stitch texture, ideal for cool afternoons.\n\nMaterials: 4 skeins of DK yarn (100 g each), 5 mm needles.",
+      "category": "chalecos",
+      "difficulty": "intermedio",
+      "image": "uploads/placeholder-2.svg",
+      "pdf": "",
+      "pdf_en": "",
+      "date": "2026-06-20",
+      "featured": true
+    },
+    {
+      "id": "cuello-nube-ejemplo",
+      "title_es": "Cuello Nube (ejemplo)",
+      "title_en": "Cloud Cowl (sample)",
+      "desc_es": "Patrón de ejemplo. Un cuello suave y esponjoso tejido en redondo.\n\nMateriales: 2 ovillos de lana gruesa, agujas circulares 8 mm.",
+      "desc_en": "Sample pattern. A soft and squishy cowl knit in the round.\n\nMaterials: 2 skeins of chunky yarn, 8 mm circular needles.",
+      "category": "bufandas",
+      "difficulty": "principiante",
+      "image": "uploads/placeholder-3.svg",
+      "pdf": "",
+      "pdf_en": "",
+      "date": "2026-06-05",
+      "featured": true
+    }
+  ]
+}

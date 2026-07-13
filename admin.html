@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Administración — Lanissima Tejidos</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/svg+xml" href="assets/img/logo-icon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <style>body { background: #f7f6f3; }</style>
+</head>
+<body>
+
+  <div class="admin-wrap">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:26px;flex-wrap:wrap;gap:10px">
+      <a class="brand" href="index.html">
+        <img src="assets/img/logo-icon.svg" alt="Lanissima" style="width:46px;height:46px">
+        <span class="brand-name">Lanissima <small style="font-size:0.9rem;color:#7a7a7a">· Panel de administración</small></span>
+      </a>
+      <button class="btn-small" id="logout-btn">Cerrar sesión</button>
+    </div>
+
+    <!-- Conexión -->
+    <div class="admin-card" id="login-card">
+      <h2>Conectar con GitHub</h2>
+      <p style="margin-bottom:14px">Para publicar contenido necesitas un <strong>token personal de GitHub</strong> (se guarda solo en este navegador).</p>
+      <div class="admin-form">
+        <div class="field full">
+          <label>Token de GitHub</label>
+          <input type="password" id="token-input" placeholder="github_pat_…">
+        </div>
+        <div class="field">
+          <label>Rama (deja "main" si no estás segura)</label>
+          <input type="text" id="branch-input" value="main">
+        </div>
+        <div class="field" style="display:flex;align-items:flex-end">
+          <button class="btn btn-solid" type="button" id="login-btn" style="width:100%">Conectar</button>
+        </div>
+      </div>
+      <div class="token-hint">
+        Cómo crear el token (una sola vez):
+        <ol>
+          <li>Entra a <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">github.com/settings/personal-access-tokens/new</a></li>
+          <li>Nombre: «Lanissima admin». En <em>Repository access</em> elige <em>Only select repositories</em> → este repositorio.</li>
+          <li>En <em>Permissions → Repository permissions → Contents</em> elige <em>Read and write</em>.</li>
+          <li>Genera el token, cópialo y pégalo aquí.</li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- Paneles -->
+    <div id="admin-panels" style="display:none">
+      <div class="admin-tabs">
+        <button class="chip active" data-tab="patterns">Patrones</button>
+        <button class="chip" data-tab="videos">Videos</button>
+        <button class="chip" data-tab="config">Configuración</button>
+      </div>
+
+      <!-- PATRONES -->
+      <div class="admin-panel" id="panel-patterns">
+        <div class="admin-card">
+          <h2>Mis patrones</h2>
+          <ul class="admin-list" id="patterns-list"></ul>
+        </div>
+        <div class="admin-card">
+          <h2 id="pattern-form-title">Nuevo patrón</h2>
+          <form id="pattern-form" class="admin-form">
+            <div class="field">
+              <label>Título (español) *</label>
+              <input type="text" name="title_es" required>
+            </div>
+            <div class="field">
+              <label>Título (inglés)</label>
+              <input type="text" name="title_en">
+            </div>
+            <div class="field full">
+              <label>Descripción (español)</label>
+              <textarea name="desc_es" placeholder="Materiales, medidas, notas…"></textarea>
+            </div>
+            <div class="field full">
+              <label>Descripción (inglés)</label>
+              <textarea name="desc_en"></textarea>
+            </div>
+            <div class="field">
+              <label>Categoría</label>
+              <select name="category"></select>
+            </div>
+            <div class="field">
+              <label>Dificultad</label>
+              <select name="difficulty">
+                <option value="principiante">Principiante</option>
+                <option value="intermedio">Intermedio</option>
+                <option value="avanzado">Avanzado</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>Foto del patrón (JPG/PNG)</label>
+              <input type="file" name="image" accept="image/*">
+            </div>
+            <div class="field">
+              <label style="display:flex;align-items:center;gap:8px;text-transform:none;letter-spacing:normal;font-size:0.9rem">
+                <input type="checkbox" name="featured" style="width:auto"> Destacar en la portada ⭐
+              </label>
+            </div>
+            <div class="field">
+              <label>PDF del patrón (español)</label>
+              <input type="file" name="pdf" accept="application/pdf">
+            </div>
+            <div class="field">
+              <label>PDF del patrón (inglés, opcional)</label>
+              <input type="file" name="pdf_en" accept="application/pdf">
+            </div>
+            <div class="field full" style="display:flex;gap:12px">
+              <button type="submit" class="btn btn-solid">Guardar patrón</button>
+              <button type="button" class="btn" id="pattern-cancel" style="display:none">Cancelar edición</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- VIDEOS -->
+      <div class="admin-panel" id="panel-videos" style="display:none">
+        <div class="admin-card">
+          <h2>Mis videos</h2>
+          <ul class="admin-list" id="videos-list"></ul>
+        </div>
+        <div class="admin-card">
+          <h2>Nuevo video</h2>
+          <form id="video-form" class="admin-form">
+            <div class="field full">
+              <label>URL del video de YouTube *</label>
+              <input type="text" name="url" placeholder="https://www.youtube.com/watch?v=…" required>
+            </div>
+            <div class="field">
+              <label>Título (español) *</label>
+              <input type="text" name="title_es" required>
+            </div>
+            <div class="field">
+              <label>Título (inglés)</label>
+              <input type="text" name="title_en">
+            </div>
+            <div class="field full">
+              <button type="submit" class="btn btn-solid">Guardar video</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- CONFIG -->
+      <div class="admin-panel" id="panel-config" style="display:none">
+        <div class="admin-card">
+          <h2>Configuración del sitio</h2>
+          <form id="config-form" class="admin-form">
+            <div class="field">
+              <label>Instagram (URL)</label>
+              <input type="url" name="instagram" placeholder="https://instagram.com/…">
+            </div>
+            <div class="field">
+              <label>YouTube (URL del canal)</label>
+              <input type="url" name="youtube" placeholder="https://youtube.com/@…">
+            </div>
+            <div class="field">
+              <label>TikTok (URL)</label>
+              <input type="url" name="tiktok">
+            </div>
+            <div class="field">
+              <label>Pinterest (URL)</label>
+              <input type="url" name="pinterest">
+            </div>
+            <div class="field full">
+              <label>Newsletter: URL de acción del formulario (Mailchimp, Buttondown…)</label>
+              <input type="url" name="newsletterAction" placeholder="Déjalo vacío si aún no tienes proveedor">
+            </div>
+            <div class="field full">
+              <button type="submit" class="btn btn-solid">Guardar configuración</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="admin-status" id="admin-status"></div>
+
+  <script src="assets/js/admin.js"></script>
+  <script>initAdmin();</script>
+</body>
+</html>

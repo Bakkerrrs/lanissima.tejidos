@@ -1,0 +1,18 @@
+{
+  "items": [
+    {
+      "id": "v-ejemplo-1",
+      "youtubeId": "HWwHmeEw2Us",
+      "title_es": "Cómo tejer con dos agujas paso a paso (ejemplo)",
+      "title_en": "How to knit with two needles step by step (sample)",
+      "date": "2026-07-01"
+    },
+    {
+      "id": "v-ejemplo-2",
+      "youtubeId": "lRzduYYSlOI",
+      "title_es": "Montar los puntos: curso express (ejemplo)",
+      "title_en": "Casting on: express course (sample)",
+      "date": "2026-06-15"
+    }
+  ]
+}

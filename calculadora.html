@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Calculadora de lana — Lanissima Tejidos</title>
+  <meta name="description" content="Calcula cuánta lana necesitas para tu próximo proyecto de tejido: gorros, sweaters, mantas y más.">
+  <link rel="icon" type="image/svg+xml" href="assets/img/logo-icon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+  <div class="page-head">
+    <h1 data-i18n="calc.title"></h1>
+    <p data-i18n="calc.subtitle"></p>
+  </div>
+
+  <section class="section" style="padding-top:40px">
+    <div class="container">
+      <div class="calc-wrap">
+        <form id="calc-form">
+          <div class="calc-grid">
+            <div class="field">
+              <label data-i18n="calc.garment"></label>
+              <select name="garment"></select>
+            </div>
+            <div class="field">
+              <label data-i18n="calc.size"></label>
+              <select name="size"></select>
+            </div>
+            <div class="field">
+              <label data-i18n="calc.weight"></label>
+              <select name="weight"></select>
+            </div>
+            <div class="field">
+              <label data-i18n="calc.skein"></label>
+              <input type="number" name="skein" value="100" min="1" max="2000">
+            </div>
+          </div>
+          <div style="text-align:center">
+            <button type="submit" class="btn btn-solid" data-i18n="calc.button"></button>
+          </div>
+        </form>
+
+        <div class="calc-result" id="calc-result">
+          <p data-i18n="calc.resultTitle"></p>
+          <p><span class="big" id="calc-meters">0</span> <span class="unit" data-i18n="calc.meters"></span></p>
+          <p class="detail" id="calc-skeins"></p>
+        </div>
+
+        <p class="calc-note" data-i18n="calc.note"></p>
+      </div>
+    </div>
+  </section>
+
+  <script src="assets/js/i18n.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/calculadora.js"></script>
+  <script>initPage('calculadora').then(() => { initCalculadora(); applyI18n(); });</script>
+</body>
+</html>

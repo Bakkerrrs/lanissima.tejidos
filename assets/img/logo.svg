@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 340" role="img" aria-label="Lanissima Tejidos">
+  <defs>
+    <clipPath id="ball"><circle cx="150" cy="130" r="105"/></clipPath>
+  </defs>
+  <!-- yarn tail -->
+  <path d="M215 255 q40 25 62 18" fill="none" stroke="#1d1d1b" stroke-width="6" stroke-linecap="round"/>
+  <!-- legs -->
+  <g stroke="#1d1d1b" stroke-width="7" stroke-linecap="round">
+    <line x1="118" y1="230" x2="114" y2="268"/>
+    <line x1="182" y1="230" x2="186" y2="268"/>
+  </g>
+  <ellipse cx="110" cy="272" rx="16" ry="8" fill="#1d1d1b"/>
+  <ellipse cx="190" cy="272" rx="16" ry="8" fill="#1d1d1b"/>
+  <!-- arms -->
+  <g stroke="#1d1d1b" stroke-width="6" stroke-linecap="round">
+    <line x1="62" y1="72" x2="40" y2="48"/>
+    <line x1="238" y1="72" x2="258" y2="46"/>
+  </g>
+  <!-- knitting needles -->
+  <g stroke="#1d1d1b" stroke-width="4" stroke-linecap="round">
+    <line x1="26" y1="58" x2="56" y2="36"/>
+    <line x1="248" y1="24" x2="262" y2="62"/>
+    <line x1="272" y1="26" x2="252" y2="62"/>
+  </g>
+  <circle cx="26" cy="58" r="4" fill="#1d1d1b"/>
+  <circle cx="248" cy="24" r="4" fill="#1d1d1b"/>
+  <circle cx="272" cy="26" r="4" fill="#1d1d1b"/>
+  <!-- yarn ball -->
+  <circle cx="150" cy="130" r="105" fill="#9ccc3f" stroke="#1d1d1b" stroke-width="7"/>
+  <g clip-path="url(#ball)">
+    <!-- top strands -->
+    <g fill="none" stroke="#1d1d1b" stroke-width="3">
+      <path d="M40 90 Q120 20 250 55"/>
+      <path d="M45 75 Q130 5 245 40"/>
+      <path d="M55 60 Q140 -5 235 28"/>
+      <path d="M60 105 Q150 40 255 75"/>
+      <path d="M70 45 Q160 -15 225 18"/>
+    </g>
+    <path d="M35 95 Q140 30 260 70 L260 20 L35 20 Z" fill="#c3e264" opacity="0.55"/>
+    <!-- face band -->
+    <rect x="30" y="90" width="240" height="82" fill="#e9d7ae" stroke="#1d1d1b" stroke-width="5"/>
+    <!-- bottom strands -->
+    <g fill="none" stroke="#1d1d1b" stroke-width="3">
+      <path d="M40 185 Q150 240 260 195"/>
+      <path d="M42 200 Q150 255 258 210"/>
+      <path d="M48 215 Q150 268 252 225"/>
+      <path d="M120 172 Q95 220 60 235"/>
+      <path d="M150 172 Q140 225 110 250"/>
+      <path d="M185 172 Q195 220 235 235"/>
+    </g>
+    <path d="M150 172 Q160 235 220 250 L260 250 Q205 230 195 172 Z" fill="#c3e264" opacity="0.55"/>
+  </g>
+  <!-- face -->
+  <circle cx="118" cy="122" r="8" fill="#1d1d1b"/>
+  <circle cx="182" cy="122" r="8" fill="#1d1d1b"/>
+  <circle cx="120.5" cy="119.5" r="2.5" fill="#ffffff"/>
+  <circle cx="184.5" cy="119.5" r="2.5" fill="#ffffff"/>
+  <circle cx="100" cy="140" r="7" fill="#f2b8c6" opacity="0.8"/>
+  <circle cx="200" cy="140" r="7" fill="#f2b8c6" opacity="0.8"/>
+  <path d="M128 140 Q150 158 172 140" fill="none" stroke="#1d1d1b" stroke-width="4.5" stroke-linecap="round"/>
+  <!-- wordmark -->
+  <text x="150" y="322" text-anchor="middle" font-family="'Cormorant Garamond', Georgia, 'Times New Roman', serif" font-size="52" font-weight="600" fill="#1d1d1b" letter-spacing="2">Lanissima</text>
+</svg>
