@@ -1,135 +1,421 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Lanissima Tejidos — Patrones y videos de tejido gratis</title>
-  <meta name="description" content="Patrones de tejido gratuitos, videotutoriales y calculadora de lana. Lanissima Tejidos: teje conmigo.">
-  <link rel="icon" type="image/svg+xml" href="assets/img/logo-icon.svg">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/style.css">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Lanissima Tejidos</title>
+<link rel="stylesheet" href="assets/css/style.css" />
+<style>
+/* Lanissima Tejidos — página construida sobre el scaffolding del landing
+   Organic: ritmo de 28px, Caprasimo sobre Figtree, formas redondas,
+   fotografías lavadas (.washed). Todos los colores/tipos/radios vienen
+   de styles.css. */
+:root {
+  --leading: 28px;
+  --half: 14px;
+  --edge: clamp(20px, 5vw, 72px);
+  --measure: 58ch;
+}
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body { margin: 0; text-wrap: pretty; overflow-x: clip; }
+.wrap { max-width: 1200px; margin: 0 auto; padding: 0 var(--edge); }
+.nav { padding-inline: max(var(--edge), calc((100% - 1200px) / 2 + var(--edge)));
+  position: sticky; top: 0; z-index: 10;
+  background: color-mix(in srgb, var(--color-bg) 88%, transparent);
+  backdrop-filter: blur(8px); }
+.nav a { white-space: nowrap; position: relative; }
+/* menú animado: subrayado terracota que crece desde la izquierda */
+.nav a::after { content: ""; position: absolute; left: 0; right: 100%; bottom: -4px;
+  height: 3px; border-radius: 999px; background: var(--color-accent);
+  transition: right .28s cubic-bezier(.4,0,.2,1); }
+.nav a:hover::after, .nav a.is-active::after { right: 0; }
+.nav a.is-active { color: var(--color-accent-700); }
+@media (max-width: 560px) { .nav a { display: none; } }
+
+/* aparición suave de secciones al hacer scroll */
+.reveal { opacity: 0; transform: translateY(18px);
+  transition: opacity .6s ease, transform .6s cubic-bezier(.22,.9,.3,1); }
+.reveal.is-in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
+
+.kicker {
+  display: block; font-size: 13px; line-height: var(--half);
+  letter-spacing: 0.06em; text-transform: uppercase; font-weight: 600;
+  color: var(--color-accent-700);
+  font-feature-settings: "tnum" 1;
+  margin: 0 0 calc(var(--leading) - var(--half));
+}
+
+/* — hero — */
+.hero { position: relative; padding: calc(4 * var(--leading)) 0 calc(3 * var(--leading)); }
+.hero::before { content: ""; position: absolute; right: -180px; top: -220px;
+  width: 420px; height: 420px; border-radius: 50%;
+  background: var(--color-accent-2-200); pointer-events: none; z-index: -1; }
+@media (max-width: 1420px) { .hero::before { right: 0; } }
+.display {
+  font-family: var(--font-heading); font-weight: var(--font-heading-weight);
+  font-size: clamp(40px, 5.8vw, 76px);
+  line-height: clamp(43px, 6.26vw, 82px);
+  letter-spacing: 0; margin: 0; margin-left: -0.028em;
+  text-box: trim-both cap alphabetic;
+}
+.display .line { display: block; }
+.hero .sub { font-size: 17px; line-height: var(--leading); max-width: var(--measure);
+  margin: calc(1.5 * var(--leading) - 1cap) 0 0;
+  text-box: trim-both cap alphabetic; }
+.hero .row { display: flex; gap: var(--space-3); flex-wrap: wrap; margin-top: var(--leading); }
+
+/* — el ovillar (círculos de cifras, como ovillos sueltos) — */
+.bed { position: relative; padding: calc(1.5 * var(--leading)) 0 calc(2.5 * var(--leading));
+  min-height: calc(17 * var(--leading)); }
+.seed { position: absolute; border-radius: 50%; aspect-ratio: 1;
+  display: grid; place-content: center; text-align: center;
+  padding: var(--leading); box-sizing: border-box; }
+.seed-a { width: 240px; left: 64px; top: calc(2.5 * var(--leading));
+  background: var(--color-accent-100); }
+.seed-b { width: 190px; left: 208px; top: calc(9 * var(--leading));
+  background: var(--color-accent-200); }
+.seed-c { width: 310px; right: 96px; top: calc(-3.5 * var(--leading));
+  background: var(--color-accent-2-300); }
+.seed-d { width: 175px; right: 321px; top: calc(4.5 * var(--leading));
+  background: var(--color-accent-2-100); }
+.seed .stat-num { font-family: var(--font-heading); font-weight: var(--font-heading-weight);
+  font-size: clamp(34px, 3.4vw, 48px); line-height: calc(2 * var(--leading));
+  margin: 0; text-box: trim-both cap alphabetic; }
+.seed-a .stat-num, .seed-b .stat-num { color: var(--color-accent-700); }
+.seed-d .stat-num { color: var(--color-accent-2-700); }
+.seed-c .stat-num { color: var(--color-accent-2-800); }
+.seed .stat-label { font-size: 13px; line-height: var(--half); letter-spacing: 0.06em;
+  text-transform: uppercase; font-weight: 600;
+  color: color-mix(in srgb, var(--color-text) 70%, transparent);
+  margin: var(--half) 0 0; max-width: 17ch; text-wrap: balance; }
+
+/* — patrones: buscador + repositorio — */
+.patterns { padding: calc(3 * var(--leading)) 0 calc(2 * var(--leading)); }
+.patterns h2, .videos h2, .insta h2 { font-family: var(--font-heading);
+  font-weight: var(--font-heading-weight);
+  font-size: 32px; line-height: calc(1.5 * var(--leading)); margin: 0;
+  text-box: trim-both cap alphabetic; }
+.section-sub { font-size: 15.5px; line-height: var(--leading);
+  color: color-mix(in srgb, var(--color-text) 78%, transparent);
+  margin: calc(var(--leading) - 1cap) 0 0; max-width: 52ch;
+  text-box: trim-both cap alphabetic; }
+.search-row { display: flex; gap: var(--space-3); flex-wrap: wrap; align-items: center;
+  margin-top: calc(1.5 * var(--leading)); }
+.search-row .input { flex: 1; min-width: 220px; max-width: 420px; }
+.filter-chips { display: flex; gap: var(--space-2); flex-wrap: wrap; }
+.chip { border: 1.5px solid var(--color-neutral-300); background: transparent;
+  color: var(--color-text); font: 600 13px/1 var(--font-body);
+  letter-spacing: 0.04em; padding: 9px 16px; border-radius: 999px;
+  cursor: pointer; transition: background .2s ease, border-color .2s ease, color .2s ease; }
+.chip:hover { background: var(--color-accent-100); border-color: var(--color-accent-300); }
+.chip:active { background: var(--color-accent-200); }
+.chip:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+.chip.is-on { background: var(--color-accent); border-color: var(--color-accent);
+  color: var(--color-bg); }
+.chip.is-on:hover { background: var(--color-accent-600); border-color: var(--color-accent-600); }
+.pattern-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: var(--leading); margin-top: calc(1.5 * var(--leading)); }
+.pattern-card { display: flex; flex-direction: column; gap: var(--half); }
+.pattern-card .card-title { margin: 0; }
+.pattern-card .meta-row { display: flex; gap: var(--space-2); flex-wrap: wrap; margin-top: auto; }
+.pattern-empty { display: none; font-size: 15.5px; line-height: var(--leading);
+  color: color-mix(in srgb, var(--color-text) 70%, transparent);
+  margin-top: calc(1.5 * var(--leading)); }
+
+/* — videos — */
+.videos { padding: calc(2.5 * var(--leading)) 0 calc(2 * var(--leading)); }
+.video-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: var(--leading); margin-top: calc(1.5 * var(--leading)); }
+.video-card { display: block; text-decoration: none; color: inherit; }
+.video-thumb { position: relative; border-radius: var(--radius-lg); overflow: hidden; }
+.video-thumb img { width: 100%; aspect-ratio: 16 / 9; display: block; object-fit: cover; }
+.video-thumb .play { position: absolute; inset: 0; display: grid; place-content: center;
+  pointer-events: none; }
+.video-thumb .play span { display: grid; place-content: center; width: 56px; height: 56px;
+  border-radius: 50%; background: color-mix(in srgb, var(--color-bg) 88%, transparent);
+  color: var(--color-accent-700); transition: transform .25s cubic-bezier(.34,1.4,.5,1), background .2s ease; }
+.video-card:hover .play span { transform: scale(1.12); background: var(--color-bg); }
+.video-card:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 4px;
+  border-radius: var(--radius-lg); }
+.video-title { font-family: var(--font-heading); font-weight: var(--font-heading-weight);
+  font-size: 18px; line-height: var(--leading); margin: var(--half) 0 0; }
+.video-meta { font-size: 13px; line-height: var(--half); letter-spacing: 0.04em;
+  color: color-mix(in srgb, var(--color-text) 70%, transparent); margin: 6px 0 0; }
+.videos .more { margin-top: calc(1.5 * var(--leading)); }
+
+/* — instagram — */
+.insta { padding: calc(2.5 * var(--leading)) 0 calc(2 * var(--leading)); }
+.insta-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--half); margin-top: calc(1.5 * var(--leading)); }
+.insta-item { display: block; border-radius: var(--radius-lg); overflow: hidden;
+  transition: transform .3s cubic-bezier(.22,.9,.3,1); }
+.insta-item:hover { transform: translateY(-4px); }
+.insta-item:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 3px; }
+.insta-item img { width: 100%; aspect-ratio: 1; display: block; object-fit: cover; }
+@media (max-width: 640px) { .insta-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* — cierre — */
+.close { padding: calc(1.5 * var(--leading)) 0 calc(2 * var(--leading)); }
+.patch { background: var(--color-accent-2-100);
+  border-radius: calc(2 * var(--radius-lg));
+  padding: calc(2 * var(--leading)) clamp(24px, 4vw, 64px); }
+.patch h3 { font-family: var(--font-heading); font-weight: var(--font-heading-weight);
+  font-size: 26px; line-height: var(--leading); margin: 0; text-box: trim-both cap alphabetic; }
+.patch .sub { font-size: 15.5px; line-height: var(--leading);
+  color: color-mix(in srgb, var(--color-text) 78%, transparent);
+  margin: calc(var(--leading) - 1cap) 0 0; max-width: var(--measure); text-box: trim-both cap alphabetic; }
+.signup { display: flex; gap: var(--space-3); align-items: stretch; max-width: 480px;
+  margin-top: var(--leading); }
+.signup .input { flex: 1; }
+.signup .input, .signup .btn { min-height: 36px; }
+footer { padding: calc(2 * var(--leading)) 0; font-size: 13px; line-height: var(--leading);
+  color: color-mix(in srgb, var(--color-text) 70%, transparent); }
+a { color: var(--color-accent-700); }
+a:hover { color: var(--color-accent-800); }
+
+/* — colapso responsivo del ovillar — */
+@media (max-width: 1080px) {
+  .bed { min-height: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--leading) var(--half); justify-items: center;
+    padding-bottom: calc(3.5 * var(--leading)); }
+  .seed { position: static; width: min(clamp(160px, 44vw, 240px), 100%); }
+  .seed-c { width: min(clamp(180px, 50vw, 280px), 100%); }
+  .seed-b, .seed-d { transform: translateY(var(--leading)); }
+}
+@media (max-width: 720px) {
+  .hero { padding-top: calc(2.5 * var(--leading)); }
+  .hero::before { width: 280px; height: 280px; top: -160px; }
+}
+@media (max-width: 389px) {
+  .bed { grid-template-columns: 1fr; gap: var(--leading); }
+  .seed { width: clamp(160px, 56vw, 220px); }
+  .seed-c { width: clamp(180px, 62vw, 240px); }
+  .seed-a, .seed-c { justify-self: start; }
+  .seed-b, .seed-d { transform: none; justify-self: end; }
+}
+</style>
 </head>
 <body>
+<nav class="nav">
+  <span class="nav-brand">Lanissima</span>
+  <a href="#patrones">Patrones</a>
+  <a href="#videos">Videos</a>
+  <a href="#instagram">Instagram</a>
+  <a class="btn btn-primary" href="#novedades" style="text-decoration:none">Suscríbete</a>
+</nav>
+<div class="wrap">
 
-  <!-- Carrusel de últimos patrones -->
-  <section class="hero-carousel" id="inicio" aria-label="Últimos patrones">
-    <div class="hc-track"></div>
-    <div class="hc-dots"></div>
-  </section>
-
-  <div class="hero-intro">
-    <span class="eyebrow">Lanissima Tejidos</span>
-    <h1 data-i18n="hero.title"></h1>
-    <p data-i18n="hero.subtitle"></p>
-  </div>
-
-  <!-- Patrones destacados -->
-  <section class="section" id="patrones">
-    <div class="container">
-      <div class="section-head">
-        <h2 data-i18n="home.featured"></h2>
-        <p data-i18n="home.featuredSub"></p>
-      </div>
-      <div class="pattern-grid" id="featured-grid"></div>
-      <div class="section-foot">
-        <a class="btn" href="patrones.html" data-i18n="home.seeAll"></a>
-      </div>
+  <section class="hero">
+    <h1 class="display"><span class="line">Tejer despacio.</span> <span class="line">Vivir abrigada.</span></h1>
+    <p class="sub">Lanissima es un rincón para tejedoras: patrones propios que puedes buscar por tipo y dificultad, tutoriales en video punto por punto, y el día a día del taller en Instagram. Todo hecho a mano, con lana buena y sin apuro.</p>
+    <div class="row">
+      <a class="btn btn-primary" href="#patrones" style="text-decoration:none">Ver los patrones</a>
+      <a class="btn btn-ghost" href="#videos" style="text-decoration:none">Ir a los videos</a>
     </div>
   </section>
 
-  <!-- Últimos videos -->
-  <section class="section section-soft" id="videos">
-    <div class="container">
-      <div class="section-head">
-        <h2 data-i18n="home.videos"></h2>
-        <p data-i18n="home.videosSub"></p>
-      </div>
-      <div class="video-grid video-grid-lg" id="home-videos"></div>
-      <div class="section-foot">
-        <a class="btn" href="videos.html" data-i18n="home.seeAllVideos"></a>
-      </div>
-    </div>
+  <section class="bed" aria-label="Lanissima en cifras">
+    <div class="seed seed-a"><p class="stat-num">36</p><p class="stat-label">Patrones publicados</p></div>
+    <div class="seed seed-b"><p class="stat-num">52</p><p class="stat-label">Videos tutoriales</p></div>
+    <div class="seed seed-c"><p class="stat-num">8,200</p><p class="stat-label">Tejedoras en la comunidad</p></div>
+    <div class="seed seed-d"><p class="stat-num">1</p><p class="stat-label">Taller lleno de ovillos</p></div>
   </section>
 
-  <!-- Calculadora de lana -->
-  <section class="section" id="calculadora">
-    <div class="container">
-      <div class="section-head">
-        <h2 data-i18n="calc.title"></h2>
-        <p data-i18n="calc.subtitle"></p>
+  <section class="patterns reveal" id="patrones">
+    <span class="kicker">Repositorio</span>
+    <h2>Patrones para tejer</h2>
+    <p class="section-sub">Busca por nombre o técnica, o filtra por tipo de prenda y dificultad. Cada patrón trae esquema, talles y las vueltas explicadas una a una.</p>
+    <div class="search-row">
+      <input class="input" id="pattern-search" type="search" placeholder="Buscar un patrón… (ej. gorro, trenzas)" aria-label="Buscar patrones" />
+      <div class="filter-chips" role="group" aria-label="Filtrar por categoría">
+        <button type="button" class="chip is-on" data-cat="">Todos</button>
+        <button type="button" class="chip" data-cat="prendas">Prendas</button>
+        <button type="button" class="chip" data-cat="accesorios">Accesorios</button>
+        <button type="button" class="chip" data-cat="bebe">Bebé</button>
+        <button type="button" class="chip" data-cat="hogar">Hogar</button>
       </div>
-      <div class="calc-wrap">
-        <form id="calc-form">
-          <div class="calc-grid">
-            <div class="field">
-              <label data-i18n="calc.garment"></label>
-              <select name="garment"></select>
-            </div>
-            <div class="field">
-              <label data-i18n="calc.size"></label>
-              <select name="size"></select>
-            </div>
-            <div class="field">
-              <label data-i18n="calc.weight"></label>
-              <select name="weight"></select>
-            </div>
-            <div class="field">
-              <label data-i18n="calc.skein"></label>
-              <input type="number" name="skein" value="100" min="1" max="2000">
-            </div>
-          </div>
-          <div style="text-align:center">
-            <button type="submit" class="btn btn-solid" data-i18n="calc.button"></button>
-          </div>
-        </form>
+    </div>
+    <div class="pattern-grid" id="pattern-grid">
+      <article class="card pattern-card" data-cat="accesorios" data-search="gorro ola punto arroz accesorios facil lana gruesa">
+        <span class="card-kicker">Accesorios</span>
+        <h3 class="card-title">Gorro Ola</h3>
+        <p class="card-body">Punto arroz en lana gruesa; se teje en una tarde y queda esponjoso como espuma.</p>
+        <div class="meta-row"><span class="tag tag-accent-2">Fácil</span><span class="tag tag-neutral">Palillos 8 mm</span></div>
+      </article>
+      <article class="card pattern-card" data-cat="prendas" data-search="cardigan musgo prendas media punto ingles top down">
+        <span class="card-kicker">Prendas</span>
+        <h3 class="card-title">Cárdigan Musgo</h3>
+        <p class="card-body">Top-down sin costuras, en punto inglés. El favorito del taller para el primer cárdigan.</p>
+        <div class="meta-row"><span class="tag tag-accent">Media</span><span class="tag tag-neutral">Palillos 5 mm</span></div>
+      </article>
+      <article class="card pattern-card" data-cat="accesorios" data-search="bufanda espiga accesorios facil punto espiga regalo">
+        <span class="card-kicker">Accesorios</span>
+        <h3 class="card-title">Bufanda Espiga</h3>
+        <p class="card-body">La espiga clásica, de esas que se tejen mirando una serie. Regalo infalible.</p>
+        <div class="meta-row"><span class="tag tag-accent-2">Fácil</span><span class="tag tag-neutral">Palillos 6 mm</span></div>
+      </article>
+      <article class="card pattern-card" data-cat="bebe" data-search="mantita nube bebe media manta apego algodon">
+        <span class="card-kicker">Bebé</span>
+        <h3 class="card-title">Mantita Nube</h3>
+        <p class="card-body">Cuadrados de punto santa clara unidos a crochet, en algodón suave para recién nacidos.</p>
+        <div class="meta-row"><span class="tag tag-accent">Media</span><span class="tag tag-neutral">Crochet 4 mm</span></div>
+      </article>
+      <article class="card pattern-card" data-cat="prendas" data-search="chaleco duna prendas avanzada trenzas ochos">
+        <span class="card-kicker">Prendas</span>
+        <h3 class="card-title">Chaleco Duna</h3>
+        <p class="card-body">Trenzas y ochos sobre fondo de punto jersey; para tejedoras que ya no le temen al cable.</p>
+        <div class="meta-row"><span class="tag tag-outline">Avanzada</span><span class="tag tag-neutral">Palillos 4.5 mm</span></div>
+      </article>
+      <article class="card pattern-card" data-cat="hogar" data-search="cojin trigo hogar facil punto elastico decoracion">
+        <span class="card-kicker">Hogar</span>
+        <h3 class="card-title">Cojín Trigo</h3>
+        <p class="card-body">Funda de cojín en elástico 2×2 con botones de madera. Abriga hasta el sofá.</p>
+        <div class="meta-row"><span class="tag tag-accent-2">Fácil</span><span class="tag tag-neutral">Palillos 7 mm</span></div>
+      </article>
+      <article class="card pattern-card" data-cat="bebe" data-search="zapatitos brote bebe facil zapatos regalo nacimiento">
+        <span class="card-kicker">Bebé</span>
+        <h3 class="card-title">Zapatitos Brote</h3>
+        <p class="card-body">Un ovillo chico alcanza para dos pares. El patrón más regalado de Lanissima.</p>
+        <div class="meta-row"><span class="tag tag-accent-2">Fácil</span><span class="tag tag-neutral">Palillos 3.5 mm</span></div>
+      </article>
+      <article class="card pattern-card" data-cat="prendas" data-search="sweater niebla prendas avanzada jacquard yugo circular">
+        <span class="card-kicker">Prendas</span>
+        <h3 class="card-title">Sweater Niebla</h3>
+        <p class="card-body">Yugo circular con jacquard de dos colores; el patrón incluye tabla de tensión y talles del XS al 3XL.</p>
+        <div class="meta-row"><span class="tag tag-outline">Avanzada</span><span class="tag tag-neutral">Palillos 4 mm</span></div>
+      </article>
+    </div>
+    <p class="pattern-empty" id="pattern-empty">No encontré patrones con esa búsqueda — prueba con otra palabra, o destela los filtros.</p>
+  </section>
 
-        <div class="calc-result" id="calc-result">
-          <p data-i18n="calc.resultTitle"></p>
-          <p><span class="big" id="calc-meters">0</span> <span class="unit" data-i18n="calc.meters"></span></p>
-          <p class="detail" id="calc-skeins"></p>
+  <section class="videos reveal" id="videos">
+    <span class="kicker">YouTube</span>
+    <h2>Tutoriales en video</h2>
+    <p class="section-sub">Cada técnica de los patrones tiene su video: manos en primer plano, sin música fuerte y al ritmo de quien recién empieza.</p>
+    <div class="video-grid">
+      <a class="video-card" href="https://www.youtube.com/@lanissima" target="_blank" rel="noopener">
+        <div class="video-thumb washed">
+          <img src="uploads/placeholder-1.svg" alt="Miniatura del video: montar puntos" loading="lazy" />
+          <div class="play"><span><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5z"/></svg></span></div>
         </div>
-
-        <p class="calc-note" data-i18n="calc.note"></p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Sobre mí -->
-  <section class="section section-soft" id="sobre-mi">
-    <div class="container">
-      <div class="about-wrap" style="padding:0">
-        <div class="portrait">
-          <img src="assets/img/logo.svg" alt="Lanissima Tejidos">
+        <h3 class="video-title">Cómo montar puntos sin apretar</h3>
+        <p class="video-meta">12 min · Técnica básica</p>
+      </a>
+      <a class="video-card" href="https://www.youtube.com/@lanissima" target="_blank" rel="noopener">
+        <div class="video-thumb washed">
+          <img src="uploads/placeholder-2.svg" alt="Miniatura del video: trenzas y ochos" loading="lazy" />
+          <div class="play"><span><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5z"/></svg></span></div>
         </div>
-        <div>
-          <h1 data-i18n="about.title"></h1>
-          <p data-i18n="about.p1"></p>
-          <p data-i18n="about.p2"></p>
-          <p data-i18n="about.p3"></p>
+        <h3 class="video-title">Trenzas y ochos paso a paso</h3>
+        <p class="video-meta">18 min · Para el Chaleco Duna</p>
+      </a>
+      <a class="video-card" href="https://www.youtube.com/@lanissima" target="_blank" rel="noopener">
+        <div class="video-thumb washed">
+          <img src="uploads/placeholder-3.svg" alt="Miniatura del video: cárdigan top-down" loading="lazy" />
+          <div class="play"><span><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5z"/></svg></span></div>
         </div>
+        <h3 class="video-title">Tu primer cárdigan top-down</h3>
+        <p class="video-meta">32 min · Serie Cárdigan Musgo</p>
+      </a>
+      <a class="video-card" href="https://www.youtube.com/@lanissima" target="_blank" rel="noopener">
+        <div class="video-thumb washed">
+          <img src="uploads/placeholder-hero.svg" alt="Miniatura del video: jacquard de dos colores" loading="lazy" />
+          <div class="play"><span><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5z"/></svg></span></div>
+        </div>
+        <h3 class="video-title">Jacquard de dos colores sin enredos</h3>
+        <p class="video-meta">24 min · Para el Sweater Niebla</p>
+      </a>
+    </div>
+    <div class="more"><a class="btn btn-secondary" href="https://www.youtube.com/@lanissima" target="_blank" rel="noopener" style="text-decoration:none">Ver el canal completo</a></div>
+  </section>
+
+  <section class="insta reveal" id="instagram">
+    <span class="kicker">Instagram</span>
+    <h2>El taller, día a día</h2>
+    <p class="section-sub">Ovillos recién llegados, prendas en proceso y alguna que otra oveja. Sígueme en <a href="https://www.instagram.com/lanissima" target="_blank" rel="noopener">@lanissima</a>.</p>
+    <div class="insta-grid">
+      <a class="insta-item washed" href="https://www.instagram.com/lanissima" target="_blank" rel="noopener" aria-label="Publicación de Instagram 1">
+        <img src="uploads/placeholder-1.svg" alt="Foto de Instagram 1" loading="lazy" />
+      </a>
+      <a class="insta-item washed" href="https://www.instagram.com/lanissima" target="_blank" rel="noopener" aria-label="Publicación de Instagram 2">
+        <img src="uploads/placeholder-2.svg" alt="Foto de Instagram 2" loading="lazy" />
+      </a>
+      <a class="insta-item washed" href="https://www.instagram.com/lanissima" target="_blank" rel="noopener" aria-label="Publicación de Instagram 3">
+        <img src="uploads/placeholder-3.svg" alt="Foto de Instagram 3" loading="lazy" />
+      </a>
+      <a class="insta-item washed" href="https://www.instagram.com/lanissima" target="_blank" rel="noopener" aria-label="Publicación de Instagram 4">
+        <img src="uploads/placeholder-hero.svg" alt="Foto de Instagram 4" loading="lazy" />
+      </a>
+      <a class="insta-item washed" href="https://www.instagram.com/lanissima" target="_blank" rel="noopener" aria-label="Publicación de Instagram 5">
+        <img src="uploads/placeholder-2.svg" alt="Foto de Instagram 5" loading="lazy" />
+      </a>
+      <a class="insta-item washed" href="https://www.instagram.com/lanissima" target="_blank" rel="noopener" aria-label="Publicación de Instagram 6">
+        <img src="uploads/placeholder-1.svg" alt="Foto de Instagram 6" loading="lazy" />
+      </a>
+    </div>
+  </section>
+
+  <section class="close reveal" id="novedades">
+    <div class="patch">
+      <h3>Un ovillo de novedades, una vez al mes</h3>
+      <p class="sub">Patrones nuevos, fechas de talleres y qué lana está llegando. Nada de spam: se escribe con las agujas en la otra mano.</p>
+      <div class="signup">
+        <input class="input" type="email" placeholder="tu@correo.com" aria-label="Correo electrónico" />
+        <button type="button" class="btn btn-primary">Suscribirme</button>
       </div>
     </div>
   </section>
 
-  <!-- Instagram -->
-  <section class="section" id="instagram">
-    <div class="container">
-      <div class="section-head">
-        <h2 data-i18n="ig.title"></h2>
-        <p class="ig-handle" id="ig-handle" data-i18n="ig.subtitle"></p>
-      </div>
-      <div class="ig-grid" id="ig-grid"></div>
-      <div class="section-foot">
-        <a class="btn" id="ig-follow" href="#" target="_blank" rel="noopener" data-i18n="ig.follow"></a>
-      </div>
-    </div>
-  </section>
+  <footer>Lanissima Tejidos — hecho a mano, punto a punto.</footer>
+</div>
 
-  <script src="assets/js/i18n.js"></script>
-  <script src="assets/js/main.js"></script>
-  <script src="assets/js/calculadora.js"></script>
-  <script>initPage('index').then(() => { initCalculadora(); applyI18n(); });</script>
+<script>
+(() => {
+  // Buscador de patrones: texto + chips de categoría
+  const input = document.getElementById('pattern-search');
+  const chips = [...document.querySelectorAll('.chip')];
+  const cards = [...document.querySelectorAll('.pattern-card')];
+  const empty = document.getElementById('pattern-empty');
+  let cat = '';
+  const norm = s => s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  function apply() {
+    const q = norm(input.value.trim());
+    let shown = 0;
+    for (const c of cards) {
+      const ok = (!cat || c.dataset.cat === cat) && (!q || norm(c.dataset.search).includes(q));
+      c.style.display = ok ? '' : 'none';
+      if (ok) shown++;
+    }
+    empty.style.display = shown ? 'none' : 'block';
+  }
+  input.addEventListener('input', apply);
+  chips.forEach(ch => ch.addEventListener('click', () => {
+    chips.forEach(o => o.classList.remove('is-on'));
+    ch.classList.add('is-on');
+    cat = ch.dataset.cat;
+    apply();
+  }));
+
+  // Aparición suave de secciones
+  const io = new IntersectionObserver(entries => {
+    for (const e of entries) if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); }
+  }, { rootMargin: '0px 0px -12% 0px' });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // Menú: enlace activo según la sección visible
+  const links = [...document.querySelectorAll('.nav a[href^="#"]')].filter(a => a.getAttribute('href') !== '#novedades');
+  const byId = Object.fromEntries(links.map(a => [a.getAttribute('href').slice(1), a]));
+  const spy = new IntersectionObserver(entries => {
+    for (const e of entries) {
+      const link = byId[e.target.id];
+      if (!link) continue;
+      if (e.isIntersecting) { links.forEach(l => l.classList.remove('is-active')); link.classList.add('is-active'); }
+    }
+  }, { rootMargin: '-30% 0px -55% 0px' });
+  Object.keys(byId).forEach(id => { const s = document.getElementById(id); if (s) spy.observe(s); });
+})();
+</script>
 </body>
 </html>
